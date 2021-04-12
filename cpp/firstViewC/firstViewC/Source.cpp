@@ -13,3 +13,15 @@ su ruta absoluta
 también agregar opengl32.lib esta sin su ruta absoluta ya que debe estar incluida en las librerias por defecto de vs2019
 copiar el codigo de ejemplo de la pagina de glfw.org
 */
+
+/*
+Para agregar glew despues que se descarga debe colocarse el archivo .dll en la carpeta C:Windows\System32
+La carpeta del archivo .lib propiedades de la solución -> Vinculador -> general -> directorios de bibliotecas adicionales 
+El archivo .lib en propiedades de la solución -> Vinculador -> entrada -> Dependencias adicionales
+El archivo .h en la carpeta dentro del proyecto en donde están los archivos .h como con glfw
+*/
+
+/*
+En el caso del ejemplo del libro LearnOpenGL al colocar la version minima y maxima de opengl y el perfile core, el programa dejo de funcionar
+por lo que se retiró
+*/

@@ -125,7 +125,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\inc\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\inc\glew32.lib;C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\inc\glfw3.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\inc</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
