@@ -22,6 +22,19 @@ El archivo .h en la carpeta dentro del proyecto en donde están los archivos .h c
 */
 
 /*
+importante: seleccionar el perfil de 32 bits o x86 "NO X64", incluir las librerias User32.lib, Gdi32.lib, Shell32.lib, glew32s.lib "NOTE LA S AL FINAL"
+y por último glfw.lib, esto en las dependencias adicionales.
+*/
+
+/*
 En el caso del ejemplo del libro LearnOpenGL al colocar la version minima y maxima de opengl y el perfile core, el programa dejo de funcionar
 por lo que se retiró
+*/
+
+/*
+referencia para el ejercicio del triangulo: https://learnopengl.com/code_viewer_gh.php?code=src/1.getting_started/2.1.hello_triangle/hello_triangle.cpp
+*/
+
+/*
+
 */

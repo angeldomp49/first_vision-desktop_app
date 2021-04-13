@@ -1,4 +1,6 @@
 ﻿  main.cpp
-main.obj : error LNK2019: símbolo externo _glfwInit sin resolver al que se hace referencia en la función _main
-C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\inc\glfw3.lib : warning LNK4272: el tipo de máquina de biblioteca 'x64' está en conflicto con el tipo de máquina de destino 'x86'
-C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\Debug\firstViewC.exe : fatal error LNK1120: 1 externos sin resolver
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\main.cpp(13,12): warning C4101: 'VBO': variable local sin referencia
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\main.cpp(14,12): warning C4101: 'VAO': variable local sin referencia
+  Source.cpp
+  Generando código...
+  firstViewC.vcxproj -> C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\Debug\firstViewC.exe
