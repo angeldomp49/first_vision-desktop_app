@@ -1,2 +1,4 @@
 ﻿  main.cpp
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\main.cpp(226,25): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\main.cpp(227,24): warning C4244: 'inicializando': conversión de 'double' a 'GLfloat'; posible pérdida de datos
   firstViewC.vcxproj -> C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\x64\Debug\firstViewC.exe
