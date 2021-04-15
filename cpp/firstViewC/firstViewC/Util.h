@@ -6,6 +6,7 @@
 #include"glew.h"
 #include"glfw3.h"
 #include<iostream>
+#include <typeinfo>
 
 class Util {
 	public:
@@ -15,6 +16,10 @@ class Util {
 			glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &numVertexAttribs);
 			std::cout << numVertexAttribs << std::endl;
 			return 0;
+		}
+
+		static void log(const char * message) {
+			std::cout << message << std::endl;
 		}
 
 };

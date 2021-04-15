@@ -2,11 +2,9 @@
 
 #include "glew.h"
 #include "glfw3.h"
-
-#include<iostream>
-
-#include"Util.h"
-#include"CustomShader.h"
+#include "Util.h"
+#include "CustomProgram.h"
+#include <iostream>
 
 int init(void);
 void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -21,6 +19,7 @@ int sendBufferData(void);
 void errorInShader(GLuint shaderObj);
 
 void render(void);
+void render2(void);
 int fillColor(void);
 int drawTriangle(void);
 int drawRectangle(void);
@@ -37,6 +36,8 @@ GLuint vertexShader;
 GLuint elementBufferObject;
 GLuint fragmentShader;
 GLuint shaderProgram;
+
+CustomProgram* cp;
 
 GLfloat vertices[] = {
 -0.5f,  -0.5f,  0.0f,
@@ -73,15 +74,18 @@ const char* fragmentShaderSource = "#version 330 core\n"
 
 int main(void)
 {
-    
     init();
     prepare();
 
+    cp = new CustomProgram();
+    cp->test();
+
     while (!glfwWindowShouldClose(window))
     {
-        render();
+        render2();
     }
     clean();
+
     glfwTerminate();
     return 0;
 }
@@ -201,6 +205,18 @@ void render() {
     fillColor();
     changeColor();
     drawRectangle();
+    glfwSwapBuffers(window);
+}
+void render2() {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    glfwPollEvents();
+    fillColor();
+    changeColor();
+    cp->use();
+    //glUseProgram(shaderProgram);
+    glBindVertexArray(vertexArrayObject);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glBindVertexArray(0);
     glfwSwapBuffers(window);
 }
 int fillColor() {

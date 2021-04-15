@@ -147,11 +147,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CustomProgram.h" />
     <ClInclude Include="CustomShader.h" />
+    <ClInclude Include="Util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
