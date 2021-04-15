@@ -23,10 +23,16 @@ class CustomProgram {
 		
 		void attachShader(CustomShader *cshader) {
 			GLuint * container;
+			try {
 			this->numberShaders++;
 			container = this->container(this->numberShaders);
 			
 			container[this->numberShaders -1] = cshader->shaderObject;
+			this->shaders = container;
+			}
+			catch () {
+
+			}
 		}
 
 		void link() {
@@ -37,6 +43,10 @@ class CustomProgram {
 
 		void use() {
 			glUseProgram(this->program);
+		}
+
+		void cleanProgram() {
+			glDeleteProgram(this->program);
 		}
 
 		void attachShaders() {
@@ -54,8 +64,10 @@ class CustomProgram {
 		void test() {
 			CustomShader* vertex = new CustomShader("vertex.vert");
 			this->attachShader(vertex);
+
 			CustomShader* fragment = new CustomShader("fragment.frag");
 			this->attachShader(fragment);
+
 			this->link();
 		}
 
