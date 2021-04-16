@@ -39,8 +39,7 @@ class CustomShader {
 				this->code = shaderStream.str().c_str();
 			}
 			catch (std::ifstream::failure e) {
-				std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
-				exit(-1);
+				throw new std::exception("Error opening file");
 			}
 		}
 		void compile() {
@@ -54,8 +53,7 @@ class CustomShader {
 
 			if (!success) {
 				glGetShaderInfoLog(this->shaderObject, 512, NULL, infoLog);
-				std::cout << "ERROR::COMPILING VERTEX SHADER : " << infoLog << std::endl;
-				exit(-1);
+				throw new std::exception("Error compiling shader");
 			}
 		}
 };

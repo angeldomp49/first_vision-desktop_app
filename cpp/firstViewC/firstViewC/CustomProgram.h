@@ -30,8 +30,8 @@ class CustomProgram {
 			container[this->numberShaders -1] = cshader->shaderObject;
 			this->shaders = container;
 			}
-			catch () {
-
+			catch (std::exception e) {
+				throw new std::exception("Error adding the shader in program");
 			}
 		}
 
@@ -50,14 +50,24 @@ class CustomProgram {
 		}
 
 		void attachShaders() {
-			for (unsigned int i = 0; i < this->numberShaders -1; i++) {
-				glAttachShader(this->program, this->shaders[i]);
+			try {
+				for (unsigned int i = 0; i < this->numberShaders -1; i++) {
+					glAttachShader(this->program, this->shaders[i]);
+				}
+			}
+			catch (std::exception e) {
+				throw new std::exception("Error to attach shaders in the program");
 			}
 		}
 
 		void deleteShaders() {
-			for (unsigned int i = 0; i < this->numberShaders -1; i++) {
-				glDeleteShader(this->shaders[i]);
+			try {
+				for (unsigned int i = 0; i < this->numberShaders -1; i++) {
+					glDeleteShader(this->shaders[i]);
+				}
+			}
+			catch (std::exception e) {
+				throw new std::exception("Error deleting shaders in the program");
 			}
 		}
 
