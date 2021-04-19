@@ -8,6 +8,6 @@ class Util
 		static GLuint* createArr(GLuint arrTest[]);
 		static unsigned int getSize(GLuint arr[]);
 		static GLuint* pointerFromSize(unsigned int size);
-		static void test();
+		static void test(void);
 };
 #endif // !UTIL_H

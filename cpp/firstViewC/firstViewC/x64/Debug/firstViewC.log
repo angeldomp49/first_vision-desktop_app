@@ -1,8 +1,9 @@
-﻿  Shape.cpp
-LINK : warning LNK4098: la biblioteca predeterminada'LIBCMT' entra en conflicto con otras bibliotecas; use la biblioteca /NODEFAULTLIB:biblioteca
-main.obj : error LNK2019: símbolo externo "public: __cdecl Shape::Shape(float * const,unsigned int * const)" (??0Shape@@QEAA@QEAMQEAI@Z) sin resolver al que se hace referencia en la función "void __cdecl test1(void)" (?test1@@YAXXZ)
-main.obj : error LNK2019: símbolo externo "public: void __cdecl Shape::prepare(void)" (?prepare@Shape@@QEAAXXZ) sin resolver al que se hace referencia en la función "void __cdecl test1(void)" (?test1@@YAXXZ)
-main.obj : error LNK2019: símbolo externo "public: void __cdecl Shape::render(void)" (?render@Shape@@QEAAXXZ) sin resolver al que se hace referencia en la función "void __cdecl test1(void)" (?test1@@YAXXZ)
-main.obj : error LNK2019: símbolo externo "public: void __cdecl Shape::clean(void)" (?clean@Shape@@QEAAXXZ) sin resolver al que se hace referencia en la función "void __cdecl test1(void)" (?test1@@YAXXZ)
-main.obj : error LNK2019: símbolo externo "public: static void __cdecl Util::test(void)" (?test@Util@@SAXXZ) sin resolver al que se hace referencia en la función "void __cdecl test2(void)" (?test2@@YAXXZ)
-C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\x64\Debug\firstViewC.exe : fatal error LNK1120: 5 externos sin resolver
+﻿  GContainer.cpp
+  main.cpp
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\GContainer.cpp(6,5): warning C4200: se ha utilizado una extensión no estándar: matriz de tamaño cero en struct/union
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\GContainer.cpp(6,5): message : Un constructor con valor predeterminado o un operador de asignación de copia o movimiento ignorará a este miembro.
+C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\main.cpp(11): message : Vea la referencia a la creación de una instancia de clase plantilla "GContainer<int>" que se está compilando
+  Shape.cpp
+  Util.cpp
+  Generando código...
+  firstViewC.vcxproj -> C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\x64\Debug\firstViewC.exe

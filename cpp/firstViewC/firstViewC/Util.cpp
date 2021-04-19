@@ -4,6 +4,7 @@
 #define GLEW_STATIC
 #include"glew.h"
 #include<iostream>
+#include<vector>
 
 class Util {
 public:
@@ -28,16 +29,6 @@ public:
 
 	static GLuint* pointerFromSize(unsigned int size) {
 		return (GLuint*)malloc(size);
-	}
-
-	static void test() {
-		GLuint a[20];
-		a[0] = 1;
-		a[1] = 2;
-
-		unsigned int size = getSize(a);
-
-		std::cout << size << std::endl;
 	}
 
 };

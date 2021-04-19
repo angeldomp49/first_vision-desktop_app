@@ -28,7 +28,7 @@ public:
 		*this->indexes = indexes;
 	}
 
-	Shape(GLfloat points[], GLuint indexes[]) {
+	Shape(const GLfloat points[], const GLuint indexes[]) {
 		glGenVertexArrays(1, &this->vertexArrayObject);
 		glGenBuffers(1, &this->vertexBufferObject);
 		glGenBuffers(1, &this->elementBufferObject);

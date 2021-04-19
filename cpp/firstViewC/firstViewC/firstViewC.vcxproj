@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GContainer.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="Util.cpp" />
@@ -153,6 +154,7 @@
   <ItemGroup>
     <ClInclude Include="CustomProgram.h" />
     <ClInclude Include="CustomShader.h" />
+    <ClInclude Include="GContainer.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="Util.h" />
   </ItemGroup>
