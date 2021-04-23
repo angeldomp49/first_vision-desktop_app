@@ -10,9 +10,9 @@ public:
 		this->items = items;
 	}
 
-	GContainer(){
+	GContainer( int defaultSize ){
 		this->size = 0;
-		this->items = (G*)malloc(101);
+		this->items = (G*)malloc(defaultSize);
 	}
 
 	void push(G item) {

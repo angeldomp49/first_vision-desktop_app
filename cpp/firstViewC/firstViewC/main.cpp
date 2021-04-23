@@ -8,7 +8,7 @@ int main(void){
 	std::cout << "el contenido en y[0] es: " << y[0] << std::endl;
 	std::cout << "el contenido en y[1] es: " << y[1] << std::endl;
 
-	GContainer<int>* intContainer = new GContainer<int>();
+	GContainer<int>* intContainer = new GContainer<int>( 100 );
 	intContainer->push(11);
 	intContainer->push(22);
 
