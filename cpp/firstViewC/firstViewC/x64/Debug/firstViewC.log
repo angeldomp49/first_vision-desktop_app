@@ -1,8 +1,5 @@
 ﻿  GContainer.cpp
   main.cpp
-C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\GContainer.cpp(6,5): warning C4200: se ha utilizado una extensión no estándar: matriz de tamaño cero en struct/union
-C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\GContainer.cpp(6,5): message : Un constructor con valor predeterminado o un operador de asignación de copia o movimiento ignorará a este miembro.
-C:\Users\PixelSiete\Desktop\angel\codigo\java\firstVision\cpp\firstViewC\firstViewC\main.cpp(11): message : Vea la referencia a la creación de una instancia de clase plantilla "GContainer<int>" que se está compilando
   Shape.cpp
   Util.cpp
   Generando código...

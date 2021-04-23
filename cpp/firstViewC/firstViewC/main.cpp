@@ -10,5 +10,6 @@ int main(void){
 
 	GContainer<int>* intContainer = new GContainer<int>();
 	intContainer->push(11);
+	intContainer->push(22);
 
 }
