@@ -5,11 +5,12 @@
 #define GLEW_STATIC
 
 #include "glew.h"
+#include "GContainer.cpp"
 
 class Shape {
 public:
-	const GLfloat* points[100];
-	const GLuint* indexes[100];
+	const GContainer<GLfloat*>* points;
+	const GContainer<GLuint*>* indexes;
 	GLuint vertexArrayObject, vertexBufferObject, elementBufferObject;
 	GLint drawType;
 	GLint polygonMode;
