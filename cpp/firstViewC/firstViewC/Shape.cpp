@@ -55,6 +55,7 @@ public:
 	}
 
 	void loadPoints() {
+		glBufferData(GL_ARRAY_BUFFER, this->points->size, this->points->items, this->drawType );
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indexes->size, this->indexes->items, this->drawType );
 	}
 

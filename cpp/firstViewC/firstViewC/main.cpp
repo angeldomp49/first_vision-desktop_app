@@ -1,16 +1,60 @@
+#define GLEW_STATIC
+#include"glew.h"
+#include"glfw3.h"
 #include <iostream>
 #include"GContainer.cpp"
 
+int init();
+void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode);
+
+GLFWwindow* window;
+
 int main(void){
 
-	int someValues[] = {
-		100,
-		200,
-		300,
-		400
-	};
+    init();
 
-	GContainer<int>* intContainer = new GContainer<int>( someValues, 4 );
 
-	intContainer->print();
+
+    while (!glfwWindowShouldClose(window))
+    {
+        glfwPollEvents();
+        glfwSwapBuffers(window);
+    }
+
+    glfwTerminate();
+    return 0;
+}
+int init() {
+    if (!glfwInit()) {
+        return -1;
+    }
+
+    glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+    window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+
+    if (nullptr == window)
+    {
+        glfwTerminate();
+        std::cout << "Failed to create Window object" << std::endl;
+        return -1;
+    }
+
+    glfwMakeContextCurrent(window);
+
+
+    if (GLEW_OK != glewInit()) {
+        std::cout << "Failed to initialize GLEW" << std::endl;
+        return -1;
+    }
+
+    glViewport(200, 100, 800, 600);
+
+    glfwSetKeyCallback(window, closeOnEsc);
+    return 0;
+}
+
+void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode) {
+    if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action) {
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    }
 }
