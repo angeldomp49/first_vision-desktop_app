@@ -147,7 +147,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GContainer.cpp" />
-    <ClCompile Include="GContainer-test.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Shape.cpp" />
+    <ClCompile Include="Source1.cpp" />
     <ClCompile Include="Util.cpp" />
   </ItemGroup>
   <ItemGroup>

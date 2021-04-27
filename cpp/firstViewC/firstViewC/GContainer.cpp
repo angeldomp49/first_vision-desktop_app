@@ -5,9 +5,10 @@ public:
 	unsigned int size;
 	G *items;
 
-	GContainer(unsigned int size, G* items) {
-		this->size = size;
-		this->items = items;
+	GContainer(G items[], unsigned int size) {
+		this->size = 0;
+		this->items = (G*)malloc(size);
+		this->push( items, size );
 	}
 
 	GContainer( int defaultSize ){

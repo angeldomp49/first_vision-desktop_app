@@ -21,8 +21,6 @@ int main( void ) {
     while (!glfwWindowShouldClose(window))
     {
         glfwPollEvents();
-        fillColor();
-        drawTriangle();
         glfwSwapBuffers(window);
     }
 

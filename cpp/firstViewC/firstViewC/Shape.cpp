@@ -9,14 +9,14 @@
 
 class Shape {
 public:
-	const GContainer<GLfloat*>* points;
-	const GContainer<GLuint*>* indexes;
+	const GContainer<GLfloat>* points;
+	const GContainer<GLuint>* indexes;
 	GLuint vertexArrayObject, vertexBufferObject, elementBufferObject;
 	GLint drawType;
 	GLint polygonMode;
 	GLint figureType;
 
-	Shape(const GLfloat points[], const GLuint indexes[], GLint figureType) {
+	Shape(GContainer<GLfloat> points[], GContainer<GLuint> indexes[], GLint figureType) {
 		glGenVertexArrays(1, &this->vertexArrayObject);
 		glGenBuffers(1, &this->vertexBufferObject);
 		glGenBuffers(1, &this->elementBufferObject);
@@ -25,11 +25,11 @@ public:
 		this->polygonMode = GL_FILL;
 		this->figureType = figureType;
 
-		*this->points = points;
-		*this->indexes = indexes;
+		this->points = points;
+		this->indexes = indexes;
 	}
 
-	Shape(const GLfloat points[], const GLuint indexes[]) {
+	Shape(GContainer<GLfloat> points[], GContainer<GLuint> indexes[]) {
 		glGenVertexArrays(1, &this->vertexArrayObject);
 		glGenBuffers(1, &this->vertexBufferObject);
 		glGenBuffers(1, &this->elementBufferObject);
@@ -38,8 +38,8 @@ public:
 		this->polygonMode = GL_FILL;
 		this->figureType = GL_TRIANGLES;
 
-		*this->points = points;
-		*this->indexes = indexes;
+		this->points = points;
+		this->indexes = indexes;
 	}
 
 	void prepare() {
@@ -55,7 +55,7 @@ public:
 	}
 
 	void loadPoints() {
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(this->indexes), this->indexes, this->drawType );
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indexes->size, this->indexes->items, this->drawType );
 	}
 
 	void enable() {
@@ -66,7 +66,7 @@ public:
 	void render() {
 		glPolygonMode(GL_FRONT_AND_BACK, this->polygonMode);
 		glBindVertexArray(this->vertexArrayObject);
-		glDrawElements(this->figureType, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(this->figureType, this->indexes->size, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 
