@@ -17,7 +17,7 @@ class CustomProgram {
 		GLuint program;
 
 		CustomProgram() {
-			this->shaders = new GContainer<CustomShader>(10);
+			this->shaders = new GContainer<CustomShader>(1000);
 		}
 		
 		void addShader(CustomShader cshader) {

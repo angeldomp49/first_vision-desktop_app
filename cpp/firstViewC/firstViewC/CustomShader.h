@@ -6,12 +6,10 @@
 
 #include "glew.h"
 #include "glfw3.h"
-#include "Util.h"
 #include<iostream>
 #include<string>
 #include<fstream>
 #include<sstream>
-#include<vector>
 
 class CustomShader {
 	private:
@@ -20,6 +18,9 @@ class CustomShader {
 		GLuint shaderObject;
 
 		CustomShader(const GLchar* shaderFilePath) {
+			this->code = (const GLchar*)malloc(1000*sizeof(const GLchar*));
+			this->shaderObject = 0;
+
 			this->openFile(shaderFilePath);
 			this->compile();
 		}
@@ -29,6 +30,7 @@ class CustomShader {
 			std::stringstream shaderStream;
 
 			shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit );
+
 			try {
 				shaderFile.open(shaderFilePath);
 				shaderStream << shaderFile.rdbuf();
@@ -40,10 +42,12 @@ class CustomShader {
 				throw new std::exception("Error opening file");
 			}
 		}
+
 		void compile() {
 			GLint success;
 			GLchar infoLog[512];
 
+			this->shaderObject = glCreateShader(GL_VERTEX_SHADER);
 			this->shaderObject = glCreateShader(GL_VERTEX_SHADER);
 			glShaderSource(this->shaderObject, 1, &this->code, NULL);
 			glCompileShader(this->shaderObject);

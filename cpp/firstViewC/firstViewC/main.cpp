@@ -10,52 +10,51 @@
 int init();
 void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode);
 void render();
+void listeningESCKey(GLFWwindow* window);
 
 GLFWwindow* window;
 
-int main(void){
-    init();
-
-    GLfloat v[] = {
-    -0.5f, -0.5f, 0.0f,
-     0.5f, -0.5f, 0.0f,
-     0.0f,  0.5f, 0.0f
-    };
-
-    GLuint i[] = {
-        0, 1, 3,
-        1, 2, 3
-    };
-
-	GContainer<GLfloat>* vertices = new GContainer<GLfloat>(v,9);
-    GContainer<GLuint>* indices = new GContainer<GLuint>(i, 6);
-
-    Shape* rectangle = new Shape(vertices, indices);
-    rectangle->prepare();
-
-    CustomShader* vshader = new CustomShader("vertex.vert");
-    CustomShader* fshader = new CustomShader("fragment.frag");
-
+int main(void) {
+	init();
+	
     CustomProgram* p = new CustomProgram();
+	CustomShader* vshader = new CustomShader("vertex.vert");
+	CustomShader* fshader = new CustomShader("fragment.frag");
 
-    p->addShader(*vshader);
-    p->addShader(*fshader);
+	p->addShader(*vshader);
+	p->addShader(*fshader);
 
     p->link();
 
-    while (!glfwWindowShouldClose(window))
-    {
+    GLfloat vertices[] = {
+        -0.5f, -0.5f, 0.0f, // left  
+         0.5f, -0.5f, 0.0f, // right 
+         0.0f,  0.5f, 0.0f  // top   
+    };
+
+    GLuint indices[] = {
+        0,1,3,
+        1,2,3
+    };
+
+    Shape* sh = new Shape(vertices, 9, indices, 6);
+
+    sh->prepare();
+
+    while (!glfwWindowShouldClose(window)) {
+        
         p->use();
-        rectangle->render();
-        glfwPollEvents();
+        sh->render();
+
         glfwSwapBuffers(window);
+        glfwPollEvents();
     }
-    rectangle->clean();
+
+    sh->clean();
     p->cleanProgram();
 
     glfwTerminate();
-    return 0;
-
+	return 0;
 }
 
 int init() {
@@ -90,6 +89,12 @@ int init() {
 void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode) {
     if (GLFW_KEY_ESCAPE == key && GLFW_PRESS == action) {
         glfwSetWindowShouldClose(window, GL_TRUE);
+    }
+}
+
+void listeningESCKey(GLFWwindow* window) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
     }
 }
 
