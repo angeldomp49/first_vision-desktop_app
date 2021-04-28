@@ -9,30 +9,19 @@
 #include "Util.h"
 #include "CustomShader.h"
 #include <iostream>
+#include"GContainer.cpp"
 
 class CustomProgram {
 	public:
-		GLuint* shaders;
-		unsigned int numberShaders;
+		GContainer<CustomShader>* shaders;
 		GLuint program;
 
 		CustomProgram() {
-			this->numberShaders = 0;
-			this->shaders = nullptr;
+			this->shaders = new GContainer<CustomShader>(10);
 		}
 		
-		void attachShader(CustomShader *cshader) {
-			GLuint * container;
-			try {
-			this->numberShaders++;
-			container = this->container(this->numberShaders);
-			
-			container[this->numberShaders -1] = cshader->shaderObject;
-			this->shaders = container;
-			}
-			catch (std::exception e) {
-				throw new std::exception("Error adding the shader in program");
-			}
+		void addShader(CustomShader cshader) {
+			this->shaders->push(cshader);
 		}
 
 		void link() {
@@ -50,43 +39,13 @@ class CustomProgram {
 		}
 
 		void attachShaders() {
-			try {
-				for (unsigned int i = 0; i < this->numberShaders -1; i++) {
-					glAttachShader(this->program, this->shaders[i]);
-				}
-			}
-			catch (std::exception e) {
-				throw new std::exception("Error to attach shaders in the program");
+			for (unsigned int i = 0; i < this->shaders->size; i++) {
+				glAttachShader(this->program, this->shaders->get(i).getObject());
 			}
 		}
 
 		void deleteShaders() {
-			try {
-				for (unsigned int i = 0; i < this->numberShaders -1; i++) {
-					glDeleteShader(this->shaders[i]);
-				}
-			}
-			catch (std::exception e) {
-				throw new std::exception("Error deleting shaders in the program");
-			}
+			this->shaders = nullptr;
 		}
-
-		void test() {
-			CustomShader* vertex = new CustomShader("vertex.vert");
-			this->attachShader(vertex);
-
-			CustomShader* fragment = new CustomShader("fragment.frag");
-			this->attachShader(fragment);
-
-			this->link();
-		}
-
-		GLuint* container(unsigned int size) {
-			GLuint* container;
-			container = (GLuint*)malloc(size + 1);
-			container[size] = '\0';
-			return container;
-		}
-
 };
 #endif

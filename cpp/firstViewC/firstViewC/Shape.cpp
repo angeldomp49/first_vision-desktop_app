@@ -52,11 +52,12 @@ public:
 		glBindVertexArray(this->vertexArrayObject);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vertexBufferObject);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->elementBufferObject);
+		
 	}
 
 	void loadPoints() {
-		glBufferData(GL_ARRAY_BUFFER, this->points->size, this->points->items, this->drawType );
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indexes->size, this->indexes->items, this->drawType );
+		glBufferData(GL_ARRAY_BUFFER, this->points->size, this->points->items, this->drawType);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indexes->size, this->indexes->items, this->drawType);
 	}
 
 	void enable() {
@@ -67,7 +68,7 @@ public:
 	void render() {
 		glPolygonMode(GL_FRONT_AND_BACK, this->polygonMode);
 		glBindVertexArray(this->vertexArrayObject);
-		glDrawElements(this->figureType, this->indexes->size, GL_UNSIGNED_INT, 0);
+		//glDrawElements(this->figureType, this->indexes->size, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 

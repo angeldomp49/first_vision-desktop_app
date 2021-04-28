@@ -1,3 +1,8 @@
+
+#ifndef GCONTAINER_CPP
+
+#define GCONTAINER_CPP
+
 #include<iostream>
 
 template<typename G> class GContainer {
@@ -61,13 +66,10 @@ public:
 		return this->items[0];
 	}
 
-	void print() {
-		std::cout << "[" << std::endl;
-
-		for (unsigned int i = 0; i < this->size; i++) {
-			std::cout << *(this->items + i) << ", ";
-		}
-		std::cout << std::endl << "]";
-		std::cout << "with size: " << this->size<<std::endl;
+	G get(unsigned int index) {
+		return *(this->items + index);
 	}
 };
+
+
+#endif // !GCONTAINER_CPP

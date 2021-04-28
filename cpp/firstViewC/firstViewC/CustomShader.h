@@ -18,8 +18,6 @@ class CustomShader {
 	public:
 		const GLchar* code;
 		GLuint shaderObject;
-		
-
 
 		CustomShader(const GLchar* shaderFilePath) {
 			this->openFile(shaderFilePath);
@@ -55,6 +53,10 @@ class CustomShader {
 				glGetShaderInfoLog(this->shaderObject, 512, NULL, infoLog);
 				throw new std::exception("Error compiling shader");
 			}
+		}
+
+		GLuint getObject() {
+			return this->shaderObject;
 		}
 };
 
