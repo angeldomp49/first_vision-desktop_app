@@ -14,53 +14,59 @@
 class Shader {
 	private:
 	public:
+		GLint type;
+		GLuint id;
 		std::string code;
-		GLuint obj;
 
-		Shader(const GLchar* shaderFilePath) {
-			this->obj = 0;
+		Shader(const GLchar* shaderFilePath, GLint type) {
 
-			this->openFile(shaderFilePath);
-			this->compile();
 		}
 
 		void openFile(const GLchar* shaderFilePath) {
-			std::ifstream shaderFile;
-			std::stringstream shaderStream;
+			std::ifstream shaderFile(shaderFilePath);
+			std::string content;
 
 			shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit );
 			try {
-				shaderFile.open(shaderFilePath);
-				shaderStream << shaderFile.rdbuf();
-				shaderFile.close();
+				content.assign(
+				(std::istreambuf_iterator<char>(shaderFile)),
+				(std::istreambuf_iterator<char>())
+				);
+				
+				this->code = content;
 
-				this->code = shaderStream.str();
+				shaderFile.close();
 			}
 			catch (std::ifstream::failure e) {
-				throw new std::exception("Error opening file");
+				std::cout << "Error reading file" << std::endl;
 			}
 			catch (std::exception e) {
-				throw new std::exception("unknown error: ");
+				std::cout << "Error unknown: " << std::endl;
 			}
 		}
 
 		void compile() {
+
 			GLint success;
 			GLchar infoLog[512];
-			const GLchar* scode = this->code.c_str();
+			GLuint obj = glCreateShader(this->type);
+			const GLchar* code = this->code.c_str();
+			
+			glShaderSource(obj, 1, &code, NULL);
+			glCompileShader(obj);
+			this->id = obj;
 
-			this->obj = glCreateShader(GL_VERTEX_SHADER);
-			glShaderSource(this->obj, 1, &scode, NULL);
-			glCompileShader(this->obj);
-			glGetShaderiv(this->obj, GL_COMPILE_STATUS, &success);
+			glGetShaderiv(obj, GL_COMPILE_STATUS, &success);
+
 			if (!success) {
-				glGetShaderInfoLog(this->obj, 512, NULL, infoLog);
-				throw new std::exception("Error compiling shader");
+				glGetShaderInfoLog(obj, 512, NULL, infoLog);
+				std::cout << "Error compiling shader: \n" << infoLog << std::endl;
 			}
-		}
 
-		GLuint getObject() {
-			return this->obj;
+			if (GL_FALSE == glIsShader(obj)) {
+				std::cout << "obj is not shader: " << std::endl;
+			}
+
 		}
 };
 
