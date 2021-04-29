@@ -60,7 +60,7 @@ public:
 	}
 
 	void flush() {
-		this->items = nullptr;
+		free(this->items);
 	}
 
 	G first() {
@@ -68,11 +68,15 @@ public:
 	}
 
 	G get(unsigned int index) {
-		return *(this->items + index);
+		return this->items[index];
 	}
 
 	G* reserve(unsigned int size) {
 		return (G*)malloc(size*sizeof(G));
+	}
+
+	unsigned int spaceUsed() {
+		return this->size * sizeof(this->items);
 	}
 };
 

@@ -9,14 +9,14 @@
 
 class Shape {
 public:
-	const GContainer<GLfloat>* points;
-	const GContainer<GLuint>* indexes;
+	GContainer<GLfloat>* points;
+	GContainer<GLuint>* indices;
 	GLuint vertexArrayObject, vertexBufferObject, elementBufferObject;
 	GLint drawType;
 	GLint polygonMode;
 	GLint figureType;
 
-	Shape(GContainer<GLfloat> points[], GContainer<GLuint> indexes[], GLint figureType) {
+	Shape(GContainer<GLfloat> points[], GContainer<GLuint> indices[], GLint figureType) {
 		glGenVertexArrays(1, &this->vertexArrayObject);
 		glGenBuffers(1, &this->vertexBufferObject);
 		glGenBuffers(1, &this->elementBufferObject);
@@ -26,10 +26,10 @@ public:
 		this->figureType = figureType;
 
 		this->points = points;
-		this->indexes = indexes;
+		this->indices = indices;
 	}
 
-	Shape(GContainer<GLfloat> points[], GContainer<GLuint> indexes[]) {
+	Shape(GContainer<GLfloat> points[], GContainer<GLuint> indices[]) {
 		glGenVertexArrays(1, &this->vertexArrayObject);
 		glGenBuffers(1, &this->vertexBufferObject);
 		glGenBuffers(1, &this->elementBufferObject);
@@ -39,7 +39,7 @@ public:
 		this->figureType = GL_TRIANGLES;
 
 		this->points = points;
-		this->indexes = indexes;
+		this->indices = indices;
 	}
 
 	Shape(GLfloat points[], unsigned int numPoints, GLuint indices[], unsigned int numIndices) {
@@ -52,11 +52,7 @@ public:
 		this->figureType = GL_TRIANGLES;
 
 		this->points = new GContainer<GLfloat>(points, numPoints);
-		this->indexes = new GContainer<GLuint>(indices, numIndices);
-	}
-
-	Shape() {
-
+		this->indices = new GContainer<GLuint>(indices, numIndices);
 	}
 
 	void prepare() {
@@ -69,24 +65,24 @@ public:
 		glBindVertexArray(this->vertexArrayObject);
 		glBindBuffer(GL_ARRAY_BUFFER, this->vertexBufferObject);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, this->elementBufferObject);
-		
 	}
 
 	void loadPoints() {
-		glBufferData(GL_ARRAY_BUFFER, this->points->size, this->points->items, this->drawType);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indexes->size, this->indexes->items, this->drawType);
+		glBufferData(GL_ARRAY_BUFFER, this->points->spaceUsed(), this->points->items, this->drawType);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, this->indices->spaceUsed(), this->indices->items, this->drawType);
 	}
 
 	void enable() {
 		glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,3*sizeof(GLfloat), (GLvoid*)0);
 		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 	}
 
 	void render() {
 		glPolygonMode(GL_FRONT_AND_BACK, this->polygonMode);
 		glBindVertexArray(this->vertexArrayObject);
-		glDrawElements(this->figureType, this->indexes->size, GL_UNSIGNED_INT, 0);
+		glDrawElements(this->figureType, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 	}
 

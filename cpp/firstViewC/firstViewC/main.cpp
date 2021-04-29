@@ -1,95 +1,111 @@
+
 #define GLEW_STATIC
+
 #include"glew.h"
 #include"glfw3.h"
-#include"CustomShader.h"
-#include"CustomProgram.h"
-#include <iostream>
-#include"GContainer.cpp"
+
 #include "Shape.cpp"
 
-int init();
+#include<iostream>
+
+void init(void);
 void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode);
 
 GLFWwindow* window;
-GLuint vertexArrayObject, vertexBufferObject, elementBufferObject;
-GLint drawType;
-GLint polygonMode;
-GLint figureType;
 
-int main(void) {
-	init();
-	
-    CustomProgram* p = new CustomProgram();
-	CustomShader* vshader = new CustomShader("vertex.vert");
-	CustomShader* fshader = new CustomShader("fragment.frag");
+int main() {
+    init();
 
-	p->addShader(*vshader);
-	p->addShader(*fshader);
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    p->link();
+    const char* vertexShaderSource = "#version 330 core\n"
+        "in vec3 aPos;\n"
+        "void main()\n"
+        "{\n"
+        "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+        "}\0";
+    const char* fragmentShaderSource = "#version 330 core\n"
+        "out vec4 FragColor;\n"
+        "void main()\n"
+        "{\n"
+        "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
+        "}\n\0";
+
+    unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+    glCompileShader(vertexShader);
+    // check for shader compile errors
+    int success;
+    char infoLog[512];
+    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+    // fragment shader
+    unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+    glCompileShader(fragmentShader);
+    // check for shader compile errors
+    glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+    if (!success)
+    {
+        glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+    }
+    // link shaders
+    unsigned int shaderProgram = glCreateProgram();
+    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram, fragmentShader);
+    glLinkProgram(shaderProgram);
+    // check for linking errors
+    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
+    if (!success) {
+        glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
+        std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
+    }
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     GLfloat vertices[] = {
-        -0.5f, -0.5f, 0.0f, // left  
-         0.5f, -0.5f, 0.0f, // right 
-         0.0f,  0.5f, 0.0f  // top   
+    -0.5f,  0.5f, 0.0f, //top left
+     0.5f,  0.5f, 0.0f, //top right
+    -0.5f, -0.5f, 0.0f, //bottom left
+     0.5f, -0.5f, 0.0f  //bottom right
     };
 
     GLuint indices[] = {
-        0,1,3,
+        0,1,2,
         1,2,3
     };
 
+    Shape* rectangle = new Shape( vertices, 12, indices, 6 );
 
-    ///////////////////////////////////////////////////////////////////////
-    glGenVertexArrays(1, &vertexArrayObject);
-    glGenBuffers(1, &vertexBufferObject);
-    glGenBuffers(1, &elementBufferObject);
-
-    drawType = GL_STATIC_DRAW;
-    polygonMode = GL_FILL;
-    figureType = GL_TRIANGLES;
-
-    glBindVertexArray(vertexArrayObject);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, drawType);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBufferObject);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, drawType);
-
-
-
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
-    glEnableVertexAttribArray(0);
-
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
-
-    ///////////////////////////////////////////////////////////////////////
+    rectangle->prepare();
 
     while (!glfwWindowShouldClose(window)) {
-        
-        p->use();
-        glPolygonMode(GL_FRONT_AND_BACK, polygonMode);
-        glBindVertexArray(vertexArrayObject);
-        glDrawArrays(GL_TRIANGLES, 0, 6);
-        glBindVertexArray(0);
 
-        glfwSwapBuffers(window);
+
+        glUseProgram(shaderProgram);
+
+        rectangle->render();
+
         glfwPollEvents();
+        glfwSwapBuffers(window);
     }
 
-    glDeleteVertexArrays(1, &vertexArrayObject);
-    glDeleteBuffers(1, &vertexBufferObject);
-    glDeleteBuffers(1, &elementBufferObject);
-    p->cleanProgram();
+    rectangle->clean();
 
     glfwTerminate();
-	return 0;
+    return 0;
 }
 
-int init() {
+void init() {
     if (!glfwInit()) {
-        return -1;
+        return;
     }
 
     glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
@@ -99,7 +115,7 @@ int init() {
     {
         glfwTerminate();
         std::cout << "Failed to create Window object" << std::endl;
-        return -1;
+        return;
     }
 
     glfwMakeContextCurrent(window);
@@ -107,13 +123,12 @@ int init() {
 
     if (GLEW_OK != glewInit()) {
         std::cout << "Failed to initialize GLEW" << std::endl;
-        return -1;
+        return;
     }
 
-    glViewport(200, 100, 800, 600);
+    glViewport(0, 0, 800, 600);
 
     glfwSetKeyCallback(window, closeOnEsc);
-    return 0;
 }
 
 void closeOnEsc(GLFWwindow* window, int key, int scancode, int action, int mode) {
