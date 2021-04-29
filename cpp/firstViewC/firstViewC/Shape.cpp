@@ -55,6 +55,10 @@ public:
 		this->indexes = new GContainer<GLuint>(indices, numIndices);
 	}
 
+	Shape() {
+
+	}
+
 	void prepare() {
 		this->bindBuffers();
 		this->loadPoints();

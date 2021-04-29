@@ -12,17 +12,18 @@ public:
 
 	GContainer(G items[], unsigned int size) {
 		this->size = 0;
-		this->items = (G*)malloc(size* sizeof(G));
+		this->items = this->reserve(size);
 		this->push( items, size );
 	}
 
 	GContainer( int defaultSize ){
 		this->size = 0;
-		this->items = (G*)malloc(defaultSize* sizeof(G));
+		this->items = this->reserve(defaultSize);
 	}
 
 	void push(G item) {
-		G* newPointer = (G*)malloc((this->size+1)* sizeof(G));
+
+		G* newPointer = this->reserve(this->size+1);
 
 		if (0 == this->size) {
 			this->items = newPointer;
@@ -40,7 +41,7 @@ public:
 
 	void push(G items[], unsigned int size) {
 		unsigned int newSize = this->size + size;
-		G* newPointer = (G*)malloc(newSize*sizeof(G));
+		G* newPointer = this->reserve(newSize);
 
 		if (0 == this->size) {
 			this->items = newPointer;
@@ -68,6 +69,10 @@ public:
 
 	G get(unsigned int index) {
 		return *(this->items + index);
+	}
+
+	G* reserve(unsigned int size) {
+		return (G*)malloc(size*sizeof(G));
 	}
 };
 
