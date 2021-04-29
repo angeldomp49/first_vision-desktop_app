@@ -11,15 +11,14 @@
 #include<fstream>
 #include<sstream>
 
-class CustomShader {
+class Shader {
 	private:
 	public:
-		const GLchar* code;
-		GLuint shaderObject;
+		std::string code;
+		GLuint obj;
 
-		CustomShader(const GLchar* shaderFilePath) {
-			this->code = (const GLchar*)malloc(1000*sizeof(const GLchar*));
-			this->shaderObject = 0;
+		Shader(const GLchar* shaderFilePath) {
+			this->obj = 0;
 
 			this->openFile(shaderFilePath);
 			this->compile();
@@ -30,37 +29,38 @@ class CustomShader {
 			std::stringstream shaderStream;
 
 			shaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit );
-
 			try {
 				shaderFile.open(shaderFilePath);
 				shaderStream << shaderFile.rdbuf();
-				std::cout << shaderFile.rdbuf() << std::endl;
 				shaderFile.close();
-				this->code = shaderStream.str().c_str();
+
+				this->code = shaderStream.str();
 			}
 			catch (std::ifstream::failure e) {
 				throw new std::exception("Error opening file");
+			}
+			catch (std::exception e) {
+				throw new std::exception("unknown error: ");
 			}
 		}
 
 		void compile() {
 			GLint success;
 			GLchar infoLog[512];
+			const GLchar* scode = this->code.c_str();
 
-			this->shaderObject = glCreateShader(GL_VERTEX_SHADER);
-			this->shaderObject = glCreateShader(GL_VERTEX_SHADER);
-			glShaderSource(this->shaderObject, 1, &this->code, NULL);
-			glCompileShader(this->shaderObject);
-			glGetShaderiv(this->shaderObject, GL_COMPILE_STATUS, &success);
-
+			this->obj = glCreateShader(GL_VERTEX_SHADER);
+			glShaderSource(this->obj, 1, &scode, NULL);
+			glCompileShader(this->obj);
+			glGetShaderiv(this->obj, GL_COMPILE_STATUS, &success);
 			if (!success) {
-				glGetShaderInfoLog(this->shaderObject, 512, NULL, infoLog);
+				glGetShaderInfoLog(this->obj, 512, NULL, infoLog);
 				throw new std::exception("Error compiling shader");
 			}
 		}
 
 		GLuint getObject() {
-			return this->shaderObject;
+			return this->obj;
 		}
 };
 

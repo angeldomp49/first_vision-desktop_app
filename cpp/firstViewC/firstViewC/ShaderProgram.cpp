@@ -1,27 +1,27 @@
 #pragma once
-#ifndef CUSTOM_PROGRAM_H
-#define CUSTOM_PROGRAM_H
+#ifndef SHADER_PROGRAM_H
+#define SHADER_PROGRAM_H
 
 #define GLEW_STATIC
 
 #include "glew.h"
 #include "glfw3.h"
 #include "Util.h"
-#include "CustomShader.h"
+#include "Shader.cpp"
 #include <iostream>
 #include"GContainer.cpp"
 
-class CustomProgram {
+class ShaderProgram {
 	public:
-		GContainer<CustomShader>* shaders;
+		GContainer<Shader>* shaders;
 		GLuint program;
 
-		CustomProgram() {
+		ShaderProgram() {
 			this->program = glCreateProgram();
-			this->shaders = new GContainer<CustomShader>(100);
+			this->shaders = new GContainer<Shader>(100);
 		}
 		
-		void addShader(CustomShader cshader) {
+		void addShader(Shader cshader) {
 			this->shaders->push(cshader);
 		}
 
