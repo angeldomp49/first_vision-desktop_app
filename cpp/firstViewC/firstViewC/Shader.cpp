@@ -12,14 +12,17 @@
 #include<sstream>
 
 class Shader {
-	private:
+	
 	public:
-		GLint type;
-		GLuint id;
+
+		GLuint type;
+		GLuint obj;
 		std::string code;
 
 		Shader(const GLchar* shaderFilePath, GLint type) {
-
+			this->type = type;
+			this->openFile(shaderFilePath);
+			this->compile();
 		}
 
 		void openFile(const GLchar* shaderFilePath) {
@@ -50,11 +53,10 @@ class Shader {
 			GLint success;
 			GLchar infoLog[512];
 			GLuint obj = glCreateShader(this->type);
-			const GLchar* code = this->code.c_str();
+			const GLchar* f = this->code.c_str();
 			
-			glShaderSource(obj, 1, &code, NULL);
+			glShaderSource(obj, 1, &f, NULL);
 			glCompileShader(obj);
-			this->id = obj;
 
 			glGetShaderiv(obj, GL_COMPILE_STATUS, &success);
 
@@ -64,9 +66,11 @@ class Shader {
 			}
 
 			if (GL_FALSE == glIsShader(obj)) {
-				std::cout << "obj is not shader: " << std::endl;
+				std::cout << "obj is not shader: "<<std::hex <<this->type << std::endl;
 			}
 
+			this->obj = obj;
+			free((void*)f);
 		}
 };
 

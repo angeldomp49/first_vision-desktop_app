@@ -13,15 +13,15 @@
 
 class ShaderProgram {
 	public:
-		GContainer<Shader>* shaders;
+		GContainer<GLuint>* shaders;
 		GLuint program;
 
 		ShaderProgram() {
 			this->program = glCreateProgram();
-			this->shaders = new GContainer<Shader>(100);
+			this->shaders = new GContainer<GLuint>(100);
 		}
 		
-		void addShader(Shader cshader) {
+		void addShader(GLuint cshader) {
 			this->shaders->push(cshader);
 		}
 
@@ -35,18 +35,22 @@ class ShaderProgram {
 			glUseProgram(this->program);
 		}
 
-		void cleanProgram() {
+		void clean() {
 			glDeleteProgram(this->program);
 		}
 
 		void attachShaders() {
 			for (unsigned int i = 0; i < this->shaders->size; i++) {
-				glAttachShader(this->program, this->shaders->get(i).getObject());
+				glAttachShader(this->program, this->shaders->get(i));
 			}
 		}
 
 		void deleteShaders() {
-			this->shaders = nullptr;
+			for (GLuint i = 0; i < this->shaders->size; i++) {
+				glDeleteShader(this->shaders->get(i));
+			}
+			
+			free(this->shaders);
 		}
 };
 #endif
