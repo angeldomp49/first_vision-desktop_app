@@ -7,6 +7,7 @@
 #include "Shape.cpp"
 #include "Shader.cpp"
 #include "ShaderProgram.cpp"
+#include "stb/stb_image.h"
 
 #include<iostream>
 
@@ -17,9 +18,6 @@ GLFWwindow* window;
 
 int main() {
     init();
-
-    GLint success;
-    GLchar infoLog[512];
 
     // vertex shader
     Shader* vertexShader = new Shader("vertex.vert", GL_VERTEX_SHADER);
@@ -51,6 +49,20 @@ int main() {
     Shape* rectangle = new Shape( vertices, 12, indices, 6 );
 
     rectangle->prepare();
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+
+    GLint x, y, n;
+    GLuint texture;
+
+    unsigned char* image_data = stbi_load("images/block.jpg", &x, &y, &n, 0);
+
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+
+    glTexSubImage2D(GL_TEXTURE_2D, 0, GL_RGB, x, y, 0, GL_RGB, GL_UNSIGNED_BYTE, image_data);
+
+    glGenerateMipmap(GL_TEXTURE_2D);
 
     while (!glfwWindowShouldClose(window)) {
         shaderProgram->use();

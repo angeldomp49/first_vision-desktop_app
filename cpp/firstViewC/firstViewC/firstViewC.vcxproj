@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="ShaderProgram.cpp" />
     <ClInclude Include="Shader.cpp" />
+    <ClInclude Include="stb\stb_image.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
